@@ -19,7 +19,7 @@ let API_BASE =
 // PUBLIC_INTERFACE
 async function apiStartGame() {
   /** POST /game/new - returns {game_id, board, status, player} */
-  const resp = await fetch(`${API_BASE}/game/new`, { method: 'POST' });
+  const resp = await fetch(`${API_BASE}/games/new`, { method: 'POST' });
   return resp.json();
 }
 
