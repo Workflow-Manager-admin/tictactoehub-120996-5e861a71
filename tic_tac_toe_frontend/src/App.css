@@ -102,3 +102,59 @@
     font-size: 12px;
   }
 }
+
+/* Minimal cells and grid for Tic Tac Toe */
+.ttt-cell {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: background 0.2s;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.ttt-cell:disabled,
+.ttt-cell[disabled] {
+  background: var(--border-color);
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+.btn:hover, .theme-toggle:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+aside table {
+  border-collapse: collapse;
+  width: 100%;
+}
+aside th, aside td {
+  padding: 6px 4px;
+  text-align: center;
+}
+aside th {
+  font-weight: bold;
+  background: var(--bg-secondary);
+}
+aside tr:nth-child(even) {
+  background: #F4F6FD;
+}
