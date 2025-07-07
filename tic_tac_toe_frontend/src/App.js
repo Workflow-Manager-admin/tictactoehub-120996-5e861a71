@@ -3,21 +3,16 @@ import './App.css';
 
 /**
  * Backend base URL handling:
- * - In local development: defaults to localhost:3001 (FastAPI backend default)
- * - In deployment/preview: auto-detects backend API from window.location (port 3000 → 3001 for API)
- * - Override with REACT_APP_API_BASE environment variable if set
+ * - Uses production deployment backend URL by default (fixes fetch/connectivity errors in deployment).
+ * - Can override with REACT_APP_API_BASE environment variable for flexibility in future deployments.
+ * - For local/dev, update `.env` or set in shell as needed; for deployed preview, adjust as desired below.
+ * - This ensures all frontend API traffic targets:
+ *     https://vscode-internal-347728-beta.beta01.cloud.kavia.ai:3001
+ *   for maximal backend connectivity and to resolve CORS issues.
  */
-let API_BASE = process.env.REACT_APP_API_BASE;
-if (!API_BASE) {
-  // If on a preview deployment, use same hostname/host, but swap port 3000→3001 for backend FastAPI
-  const { protocol, hostname, port } = window.location;
-  if (port === "3000") {
-    API_BASE = `${protocol}//${hostname}:3001`;
-  } else {
-    // fall back to 'http://localhost:3001' as safe default
-    API_BASE = "http://localhost:3001";
-  }
-}
+let API_BASE =
+  process.env.REACT_APP_API_BASE ||
+  "https://vscode-internal-347728-beta.beta01.cloud.kavia.ai:3001";
 
 // --- API HELPERS ---
 
@@ -305,11 +300,11 @@ function App() {
                 onClick={startGame}
                 className="btn"
                 style={{
-                  background: "#1976d2", color: "#fff",
+                  background: "#1976d2", color: "#ffffff", fontFamily: "Arial, sans-serif",
                   border: "none", padding: "16px 40px", borderRadius: 9,
-                  fontSize: "1.1rem", fontWeight: 700
+                  fontSize: "1.1rem", fontWeight: "bold", textAlign: "center"
                 }}
-              >Start Game</button>
+              >Start Game!!</button>
             }
             {error && <div style={{ color: 'red', marginTop: 9 }}>{error}</div>}
             {loading && <div style={{ margin: "12px 0", color: "#1976d2" }}>Loading...</div>}

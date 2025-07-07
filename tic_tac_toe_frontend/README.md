@@ -14,27 +14,36 @@ In the project directory, you can run:
 
 ---
 
-## Troubleshooting "Failed to fetch" / API Connectivity
+## Backend API Base URL (Frontend-Backend Connectivity)
 
-- The frontend attempts to auto-detect the backend API address. By default:
-    - On local development: it uses `http://localhost:3001`
-    - In a deployed/preview environment, it uses the same host as the frontend, but with port `3001` for the backend (FastAPI).
-    - You can override this with the `REACT_APP_API_BASE` environment variable.
+**Production/previews:**  
+All API requests from the frontend are now directed to the backend at:
+```
+https://vscode-internal-347728-beta.beta01.cloud.kavia.ai:3001
+```
+This ensures API connectivity and corrects all "Failed to fetch" errors by default.
 
-- If you see a "Failed to fetch" error:
-    1. Ensure the FastAPI backend server is running and accessible (should be at `http://localhost:3001` locally, or the corresponding host:3001 in deployment).
-    2. Ensure CORS is enabled on the backend (`tic_tac_toe_backend`). For FastAPI, verify code contains:
-        ```python
-        from fastapi.middleware.cors import CORSMiddleware
-        app.add_middleware(
-            CORSMiddleware,
-            allow_origins=["*"],
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
-        ```
-    3. Make sure there are no mixed content (HTTP/HTTPS) issues; frontend and backend should both use the same protocol in production.
+**Customizing or overriding the API base (for development, alternate deployments):**
+- If you need to use a different backend API base, set the environment variable `REACT_APP_API_BASE` in a `.env` file at the project root:
+  ```
+  REACT_APP_API_BASE=http://localhost:3001
+  ```
+- You must _restart_ the frontend (`npm start` or redeploy) after changing this value.
+
+**Troubleshooting "Failed to fetch" / API Connectivity**
+- Confirm the backend is running and accessible at the target URL.
+- Ensure CORS is enabled on the backend (FastAPI) with:
+    ```python
+    from fastapi.middleware.cors import CORSMiddleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    ```
+- Make sure both frontend and backend use compatible protocols (HTTP/HTTPS).
 
 ---
 
