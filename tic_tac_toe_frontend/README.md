@@ -8,10 +8,35 @@ This project provides a minimal React template with a clean, modern UI and minim
 - **Modern UI**: Clean, responsive design with KAVIA brand styling
 - **Fast**: Minimal dependencies for quick loading times
 - **Simple**: Easy to understand and modify
-
 ## Getting Started
 
 In the project directory, you can run:
+
+---
+
+## Troubleshooting "Failed to fetch" / API Connectivity
+
+- The frontend attempts to auto-detect the backend API address. By default:
+    - On local development: it uses `http://localhost:3001`
+    - In a deployed/preview environment, it uses the same host as the frontend, but with port `3001` for the backend (FastAPI).
+    - You can override this with the `REACT_APP_API_BASE` environment variable.
+
+- If you see a "Failed to fetch" error:
+    1. Ensure the FastAPI backend server is running and accessible (should be at `http://localhost:3001` locally, or the corresponding host:3001 in deployment).
+    2. Ensure CORS is enabled on the backend (`tic_tac_toe_backend`). For FastAPI, verify code contains:
+        ```python
+        from fastapi.middleware.cors import CORSMiddleware
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+        ```
+    3. Make sure there are no mixed content (HTTP/HTTPS) issues; frontend and backend should both use the same protocol in production.
+
+---
 
 ### `npm start`
 

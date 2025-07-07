@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Backend base URL – assuming same origin/proxy setup in dev, or edit as needed
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3001';
+/**
+ * Backend base URL handling:
+ * - In local development: defaults to localhost:3001 (FastAPI backend default)
+ * - In deployment/preview: auto-detects backend API from window.location (port 3000 → 3001 for API)
+ * - Override with REACT_APP_API_BASE environment variable if set
+ */
+let API_BASE = process.env.REACT_APP_API_BASE;
+if (!API_BASE) {
+  // If on a preview deployment, use same hostname/host, but swap port 3000→3001 for backend FastAPI
+  const { protocol, hostname, port } = window.location;
+  if (port === "3000") {
+    API_BASE = `${protocol}//${hostname}:3001`;
+  } else {
+    // fall back to 'http://localhost:3001' as safe default
+    API_BASE = "http://localhost:3001";
+  }
+}
 
 // --- API HELPERS ---
 
